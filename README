@@ -1,0 +1,18 @@
+ConstantContact
+===============
+This is a very activeresource-like ruby wrapper to the constant contact api.  It's not quite done yet and if you are interested in using this code, check it out, and message me with questions. 
+
+
+
+Example
+=======
+
+ConstantContact::List.find(1)
+ConstantContact::List.find :all
+
+
+
+
+
+
+Copyright (c) 2009 Timothy Case, released under the MIT license
