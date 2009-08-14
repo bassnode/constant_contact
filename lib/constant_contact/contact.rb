@@ -1,7 +1,7 @@
 module ConstantContact
   class Contact < Base
     attr_accessor :opt_in_source
-        
+
     def to_xml
       xml = Builder::XmlMarkup.new
       xml.tag!("Contact", :xmlns => "http://ws.constantcontact.com/ns/1.0/") do

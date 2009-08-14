@@ -12,9 +12,9 @@ class Activity < Test::Unit::TestCase
       end        
       @activity = ConstantContact::Activity.new(:activity_type => "SV_ADD")
       @activity.contacts = @contacts
-      list = ConstantContact::List.new
-      list.stubs(:id).returns('http://api.constantcontact.com/ws/customers/joesflowers/lists/2')
-      @activity.lists = [list]
+      @list = ConstantContact::List.new
+      @list.stubs(:id).returns('http://api.constantcontact.com/ws/customers/joesflowers/lists/2')
+      @activity.lists = [@list]
     end
     
     should 'include activity type' do
@@ -29,6 +29,7 @@ class Activity < Test::Unit::TestCase
     should 'include lists' do
       assert_match(/Test2\&lists\=http\%3A\%2F\%2Fapi\.constantcontact\.com\%2Fws\%2Fcustomers\%2Fjoesflowers\%2Flists\%2F2/, @activity.encode)
     end
+    
   end
   
   context 'format' do 

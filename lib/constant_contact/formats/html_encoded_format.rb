@@ -3,8 +3,15 @@ module ActiveResource
     module HtmlEncodedFormat
       extend self
       def mime_type
-        "application/atom+xml"
+        "application/x-www-form-urlencoded"
       end
+      
+      
+      def decode(xml)
+        {}
+      end
+      
+
     end
   end
 end
