@@ -62,7 +62,7 @@ module ConstantContact
       self.view_as_webpage                  = 'NO' unless attributes.has_key?('ViewAsWebpage')
       self.from_name                        = self.class.user unless attributes.has_key?('FromName')
       self.permission_reminder              = 'YES' unless attributes.has_key?('PermissionReminder')
-      self.permission_reminder_text         = %Q{You're receiving this email because of your relationship with us. Please &lt;ConfirmOptin>&lt;a style="color:#0000ff;">confirm&lt;/a>&lt;/ConfirmOptin> your continued interest in receiving email from us.} unless attributes.has_key?('PermissionReminderText')
+      self.permission_reminder_text         = %Q{You're receiving this email because of your relationship with us. Please <ConfirmOptin><a style="color:#0000ff;">confirm</a></ConfirmOptin> your continued interest in receiving email from us.} unless attributes.has_key?('PermissionReminderText')
       self.greeting_salutation              = 'Dear' unless attributes.has_key?('GreetingSalutation')
       self.greeting_name                    = "FirstName"  unless attributes.has_key?('GreetingName')
       self.greeting_string                  = 'Greetings!' unless attributes.has_key?('GreetingString')
@@ -83,22 +83,16 @@ module ConstantContact
       self.organization_postal_code         = '64108' unless attributes.has_key?('OrganizationPostalCode')
     end
     
-    # Encodes and formats data if present.
+    # Formats data if present.
     def before_save
-      unless @encoded
-        self.style_sheet              = html_encode(style_sheet) if attributes.has_key?('StyleSheet')
-        self.permission_reminder_text = html_encode(permission_reminder_text) if attributes.has_key?('PermissionReminderText')
-        self.email_content            = html_encode(email_content)
-        self.email_text_content       = "<Text>#{email_text_content}</Text>"
-        self.date                     = self.date.strftime(DATE_FORMAT) if attributes.has_key?('Date')
-        @encoded = true 
-      end
-      
+      self.email_text_content = "<Text>#{email_text_content}</Text>" unless email_text_content.match /^\<Text/
+      self.date               = self.date.strftime(DATE_FORMAT) if attributes.has_key?('Date')      
     end
     
     
     def validate
-      unless attributes.has_key?('EmailContentFormat') && ['html', 'xhtml'].include?(email_content_format.downcase)
+      # NOTE: Needs to be uppercase!
+      unless attributes.has_key?('EmailContentFormat') && ['HTML', 'XHTML'].include?(email_content_format)
         errors.add(:email_content_format, 'must be either HTML or XHTML (the latter for advanced email features)') 
       end
       
