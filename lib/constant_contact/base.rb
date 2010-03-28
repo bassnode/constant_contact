@@ -96,6 +96,9 @@ module ConstantContact
     def after_save
     end
     
+    def validate      
+    end
+
     # So client-side validations run
     def valid? 
       errors.clear
